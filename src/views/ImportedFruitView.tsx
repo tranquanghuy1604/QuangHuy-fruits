@@ -51,7 +51,7 @@ export default function ImportedFruitView() {
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-  const currentData = dataProductCategory?.slice(startIndex, endIndex);
+  const currentData = dataProductCategory && dataProductCategory?.slice(startIndex, endIndex);
   return (
     <div className='text-[#000]'>
       <div className='mt-[50px]'>
@@ -64,7 +64,6 @@ export default function ImportedFruitView() {
           {dataProductCategory &&
             currentData.map((item: any) => {
               const promoPrice = getPromotionalPrice(item);
-              console.log(promoPrice);
               return (
                 <div key={item._id} className='w-full bg-white border-[1px] p-6 rounded-md shadow-lg'>
                   <Link href={`/product/${FormatUrl(item.name)}`}>
