@@ -70,7 +70,7 @@ export default function ImportedFruitView() {
                   <Link href={`/product/${FormatUrl(item.name)}`}>
                     <div className='overflow-hidden'>
                       <img
-                        src={item.image}
+                        src={`http://localhost:5000/${item.image}`}
                         className='w-full cursor-pointer hover:scale-[1.3] transition-all object-cover overflow-hidden'
                         alt=''
                       />
