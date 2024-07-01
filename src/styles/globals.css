@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+.custom-dropdown-item:hover {
+  background-color: #00c42e99 !important;
+}
+.custom-dropdown-menu {
+  border: 1px solid #00c42e;
+  min-width: 200px !important;
+}
+.input-shop {
+  .ant-input-number-input {
+    padding: 0;
+    text-align: center;
+    line-height: 30px;
+  }
+}
+body {
+  color: rgb(var(--foreground-rgb));
+  background: #fff;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

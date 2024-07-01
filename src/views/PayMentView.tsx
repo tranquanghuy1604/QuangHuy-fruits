@@ -1,0 +1,195 @@
+'use client';
+import { useQueryGetUser } from '@/api/authApi';
+import { useMutationCreateOrder } from '@/api/orderApi';
+import { cartState } from '@/recoil/common.recoil';
+import { FormatPrice } from '@/utils/fomartPrice';
+import { Button, Input, Select, Form } from 'antd';
+import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { useRecoilState } from 'recoil';
+
+const { Option } = Select;
+
+export default function PayMentView() {
+  const [isActive, setIsActive] = useState(false);
+  const [cart, setCart] = useRecoilState(cartState);
+  const [total, setTotal] = useState(0);
+  const { data } = useQueryGetUser();
+  const user = data as any;
+  const { mutate: createOrder } = useMutationCreateOrder();
+  useEffect(() => {
+    const cartTotal = cart.reduce((acc: any, item: any) => acc + item.price * item.quantity, 0);
+    setTotal(cartTotal);
+  }, [cart]);
+
+  const onFinish = (values: any) => {
+    const infoUser = {
+      fullname: values.firstName + ' ' + values.lastName,
+      phone: values.phones,
+      email: values.email,
+    };
+    const payload = {
+      products: cart.map((item: any) => ({
+        product: item._id,
+        quantity: item.quantity,
+      })),
+    };
+    createOrder(
+      {
+        customer: infoUser,
+        created_at: new Date(),
+        payment: true,
+        payment_method: 'offline',
+        note: values.notes,
+        total_price: total,
+        products: cart.map((r: any) => {
+          return {
+            product: r._id,
+            quantity: r.quantity,
+          };
+        }),
+        customer_id: user?._id,
+        ship_code: Math.floor(total * 0.01),
+      },
+      {
+        onSuccess: (data) => {
+          setCart([]);
+          toast.success('Đặt hàng thành công');
+        },
+      },
+    );
+  };
+
+  return (
+    <div className='text-[#000] mt-[40px] px-16'>
+      <div>
+        <div>
+          Bạn có mã ưu đãi?
+          <Button type='link' onClick={() => setIsActive(!isActive)} className='group text-[#000]'>
+            Ấn vào đây để nhập mã
+          </Button>
+        </div>
+        {isActive && (
+          <div className='pt-[20px] pb-[50px] px-[20px] border-[2px] border-dashed border-green-600'>
+            <p>Nếu bạn có mã giảm giá, vui lòng điền vào phía bên dưới.</p>
+            <div className='flex mt-[20px] items-center'>
+              <Input type='text' placeholder='Mã ưu đãi' className='rounded-none h-[40px]' />
+              <Button type='primary' className='rounded-none h-[40px]'>
+                Áp dụng
+              </Button>
+            </div>
+          </div>
+        )}
+        <div className='md:flex justify-between items-start mt-[50px]'>
+          <div className='rounded w-full max-w-[800px]'>
+            <h2 className='text-xl font-bold mb-4'>THÔNG TIN THANH TOÁN</h2>
+            <Form
+              name='basic'
+              initialValues={{ remember: true }}
+              onFinish={onFinish}
+              autoComplete='off'
+              layout='vertical'
+            >
+              <div className='flex justify-between'>
+                <Form.Item
+                  className='w-[40%]'
+                  label='Tên'
+                  name='firstName'
+                  rules={[{ required: true, message: 'Vui lòng nhập tên!' }]}
+                >
+                  <Input />
+                </Form.Item>
+
+                <Form.Item
+                  className='w-[40%]'
+                  label='Họ'
+                  name='lastName'
+                  rules={[{ required: true, message: 'Vui lòng nhập họ!' }]}
+                >
+                  <Input />
+                </Form.Item>
+              </div>
+
+              <Form.Item
+                label='Quốc gia/Khu vực'
+                name='country'
+                rules={[{ required: true, message: 'Vui lòng chọn quốc gia!' }]}
+              >
+                <Select>
+                  <Option value='vietnam'>Việt Nam</Option>
+                </Select>
+              </Form.Item>
+
+              <Form.Item label='Địa chỉ' name='address' rules={[{ required: true, message: 'Vui lòng nhập địa chỉ!' }]}>
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                label='Tỉnh / Thành phố'
+                name='city'
+                rules={[{ required: true, message: 'Vui lòng nhập tỉnh/thành phố!' }]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                label='Số điện thoại'
+                name='phone'
+                rules={[{ required: true, message: 'Vui lòng nhập số điện thoại!' }]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                label='Địa chỉ email'
+                name='email'
+                rules={[{ required: true, message: 'Vui lòng nhập email!' }]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item label='Ghi chú đơn hàng (tùy chọn)' name='notes'>
+                <Input.TextArea style={{ minHeight: 100 }} />
+              </Form.Item>
+
+              <Form.Item>
+                <Button type='primary' htmlType='submit' className='w-full min-h-[50px]'>
+                  ĐẶT HÀNG
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
+          <div className='rounded w-full border-[2px] border-solid border-[#00C42E] max-w-[400px] p-8'>
+            <h2 className='text-xl font-bold mb-4'>ĐƠN HÀNG CỦA BẠN</h2>
+            <div className='border-b pb-4 mb-4'>
+              {cart.map((item: any) => (
+                <p key={item._id} className='flex justify-between'>
+                  <span>
+                    {item.name} × {item.quantity}
+                  </span>
+                  <span>{FormatPrice(item.price * item.quantity)} đ</span>
+                </p>
+              ))}
+            </div>
+            <div className='border-b pb-4 mb-4'>
+              <p className='flex justify-between'>
+                <span>Tạm tính</span>
+                <span>{FormatPrice(total)} đ</span>
+              </p>
+            </div>
+            <div className='border-b pb-4 mb-4'>
+              <p className='flex justify-between'>
+                <span>Tổng</span>
+                <span>{FormatPrice(total)} đ</span>
+              </p>
+            </div>
+            <p className='mt-4 text-gray-500 text-sm'>
+              Thông tin cá nhân của bạn sẽ được sử dụng để xử lý đơn hàng, tăng trải nghiệm sử dụng website, và cho các
+              mục đích cụ thể khác đã được mô tả trong chính sách riêng tư.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
