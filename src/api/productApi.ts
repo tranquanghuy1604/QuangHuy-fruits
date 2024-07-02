@@ -25,7 +25,9 @@ export const useQueryGetListProduct = () => {
 };
 
 export const useQueryGetProductByCategory = (params: any) => {
-  return useQuery(['list-product-category'], () => productApi.getProductByCategory(params));
+  return useQuery(['list-product-category', params], () => productApi.getProductByCategory(params), {
+    enabled: !!params,
+  });
 };
 
 export const useQueryGetProduct = (productId: any) => {

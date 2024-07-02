@@ -15,6 +15,7 @@ export default function ImportedFruitView() {
   const { data: dataPromotion } = useQueryGetAllPromotion();
   const listPromotion = dataPromotion as any;
   const dataCategory = data as any;
+  console.log(dataCategory);
   const { data: dataProductByCategory } = useQueryGetProductByCategory({
     category_id: dataCategory && dataCategory[1]?._id,
   });
