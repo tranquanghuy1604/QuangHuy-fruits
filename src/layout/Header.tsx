@@ -148,7 +148,7 @@ export default function Header() {
     },
     {
       key: '3',
-      label: <button rel='noopener noreferrer'>Thông tin đơn hàng</button>,
+      label: <Link href='/order-info'>Thông tin đơn hàng</Link>,
     },
     {
       key: '4',

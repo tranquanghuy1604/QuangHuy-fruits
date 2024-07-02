@@ -25,8 +25,9 @@ export default function LoginForm() {
       {
         onSuccess: (data: any) => {
           localStorage.setItem('authToken', data?.token);
-          toast.success('Đăng nhập thành công');
+          localStorage.setItem('authToken', data?.token);
           setLogged(true);
+          toast.success('Đăng nhập thành công');
           router.push('/');
         },
       },

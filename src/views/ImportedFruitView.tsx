@@ -70,7 +70,7 @@ export default function ImportedFruitView() {
                     <div className='overflow-hidden'>
                       <img
                         src={`http://localhost:5000/${item.images}`}
-                        className='w-full cursor-pointer hover:scale-[1.3] transition-all object-cover overflow-hidden'
+                        className='w-full h-[100px] md:h-[200px] cursor-pointer hover:scale-[1.3] transition-all object-cover overflow-hidden'
                         alt=''
                       />
                     </div>
