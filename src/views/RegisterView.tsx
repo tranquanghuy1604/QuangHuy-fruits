@@ -1,17 +1,26 @@
 'use client';
 import React, { useEffect } from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Modal } from 'antd';
+import { Button, Checkbox, Form, Input, Modal, Select } from 'antd';
 import Link from 'next/link';
 import { useRegister } from '@/api/authApi';
 import { toast } from 'react-toastify';
+import { useForm } from 'antd/es/form/Form';
 
 export default function RegisterForm() {
   const { mutate: register } = useRegister();
-
   const onFinish = (values: any) => {
     register(
-      { email: values?.email, password: values?.password },
+      {
+        first_name: values.first_name,
+        last_name: values.last_name,
+        province: values.province,
+        ward: values.ward,
+        phone: values.phone,
+        gender: values.gender,
+        email: values?.email,
+        password: values?.password,
+      },
       {
         onSuccess: (data) => {
           toast.success('Đăng ký thành công');
@@ -29,6 +38,19 @@ export default function RegisterForm() {
           initialValues={{ remember: true }}
           onFinish={onFinish}
         >
+          <div className='flex justify-between'>
+            <Form.Item
+              className='w-[49%]'
+              name='first_name'
+              rules={[{ required: true, message: 'Vui lòng nhập tên!' }]}
+            >
+              <Input className='h-[50px]' placeholder='Tên' />
+            </Form.Item>
+
+            <Form.Item className='w-[49%]' name='last_name' rules={[{ required: true, message: 'Vui lòng nhập họ!' }]}>
+              <Input className='h-[50px]' placeholder='Họ' />
+            </Form.Item>
+          </div>
           <Form.Item
             name='email'
             rules={[
@@ -36,20 +58,34 @@ export default function RegisterForm() {
               { required: true, message: 'Please input your Email!' },
             ]}
           >
-            <Input
-              className='mt-[10px] h-[50px]'
-              prefix={<LockOutlined className='site-form-item-icon' />}
-              placeholder='Email'
+            <Input className='mt-[10px] h-[50px]' placeholder='Email' />
+          </Form.Item>
+
+          <Form.Item name='province' rules={[{ required: true, message: 'Vui lòng nhập tỉnh/thành phố!' }]}>
+            <Input className='h-[50px]' placeholder='Tỉnh' />
+          </Form.Item>
+          <Form.Item name='ward' rules={[{ required: true, message: 'Vui lòng nhập huyện' }]}>
+            <Input className='h-[50px]' placeholder='Huyện' />
+          </Form.Item>
+
+          <Form.Item name='phone' rules={[{ required: true, message: 'Vui lòng nhập số điện thoại!' }]}>
+            <Input className='h-[50px]' placeholder='Số điện thoại' />
+          </Form.Item>
+          <Form.Item name='gender' rules={[{ required: true, message: 'Vui lòng nhập số Giới tính' }]}>
+            <Select
+              className='h-[50px]'
+              placeholder='Giới tính'
+              options={[
+                { value: 'male', label: 'Nam' },
+                { value: 'female', label: 'Nữ' },
+              ]}
             />
           </Form.Item>
+
           <Form.Item name='password' rules={[{ required: true, message: 'Please input your Password!', min: 6 }]}>
-            <Input.Password
-              className='mt-[10px] h-[50px]'
-              prefix={<LockOutlined className='site-form-item-icon' />}
-              type='password'
-              placeholder='Password'
-            />
+            <Input.Password className='mt-[10px] h-[50px]' type='password' placeholder='Password' />
           </Form.Item>
+
           <Form.Item
             name='confirm-password'
             dependencies={['password']}
@@ -69,12 +105,7 @@ export default function RegisterForm() {
               }),
             ]}
           >
-            <Input.Password
-              className='mt-[10px] h-[50px]'
-              prefix={<LockOutlined className='site-form-item-icon' />}
-              type='password'
-              placeholder='Confirm Password'
-            />
+            <Input.Password className='mt-[10px] h-[50px]' type='password' placeholder='Confirm Password' />
           </Form.Item>
           <Form.Item>
             <Form.Item name='remember' valuePropName='checked' noStyle>

@@ -7,12 +7,12 @@ export interface ParamsLogin {
 }
 
 const authApi = {
-  async login(param: ParamsLogin) {
+  async login(param: any) {
     const url = '/user/login';
     return await apiClient.post(url, param);
   },
 
-  async register(params: ParamsLogin) {
+  async register(params: any) {
     const url = `/user/createUser`;
     return await apiClient.post(url, params);
   },
@@ -32,13 +32,13 @@ const authApi = {
 };
 
 export const useLogin = () => {
-  return useMutation((params: ParamsLogin) => {
+  return useMutation((params: any) => {
     return authApi.login(params);
   });
 };
 
 export const useRegister = () => {
-  return useMutation((params: ParamsLogin) => {
+  return useMutation((params: any) => {
     return authApi.register(params);
   });
 };
