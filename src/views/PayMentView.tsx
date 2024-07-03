@@ -1,7 +1,7 @@
 'use client';
 import { useQueryGetUser } from '@/api/authApi';
 import { useMutationCreateOrder } from '@/api/orderApi';
-import { cartState } from '@/recoil/common.recoil';
+import { cartState, loggedState } from '@/recoil/common.recoil';
 import { FormatPrice } from '@/utils/fomartPrice';
 import { Button, Input, Select, Form } from 'antd';
 import { useRouter } from 'next/navigation';
@@ -17,8 +17,9 @@ export default function PayMentView() {
   const [cart, setCart] = useRecoilState(cartState);
   const [total, setTotal] = useState(0);
   const { data, isLoading } = useQueryGetUser();
+  const [logged, setLogged] = useRecoilState(loggedState);
   const user = data as any;
-  console.log(user?.first_name);
+  console.log(user);
   const { mutate: createOrder } = useMutationCreateOrder();
   useEffect(() => {
     const cartTotal = cart.reduce((acc: any, item: any) => acc + item.price * item.quantity, 0);
@@ -30,6 +31,7 @@ export default function PayMentView() {
       fullname: values.first_name + ' ' + values.last_name,
       phone: values.phone,
       email: values.email,
+      address: values.address,
     };
     if (user) {
       createOrder(
@@ -62,109 +64,92 @@ export default function PayMentView() {
     }
   };
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className='text-[#000] mt-[40px] px-16'>
       <div>
-        <div>
-          Bạn có mã ưu đãi?
-          <Button type='link' onClick={() => setIsActive(!isActive)} className='group text-[#000]'>
-            Ấn vào đây để nhập mã
-          </Button>
-        </div>
-        {isActive && (
-          <div className='pt-[20px] pb-[50px] px-[20px] border-[2px] border-dashed border-green-600'>
-            <p>Nếu bạn có mã giảm giá, vui lòng điền vào phía bên dưới.</p>
-            <div className='flex mt-[20px] items-center'>
-              <Input type='text' placeholder='Mã ưu đãi' className='rounded-none h-[40px]' />
-              <Button type='primary' className='rounded-none h-[40px]'>
-                Áp dụng
-              </Button>
-            </div>
-          </div>
-        )}
         <div className='md:flex justify-between items-start mt-[50px]'>
           <div className='rounded w-full max-w-[800px]'>
             <h2 className='text-xl font-bold mb-4'>THÔNG TIN THANH TOÁN</h2>
-            {user ? (
-              isLoading ? (
-                <div>loading....</div>
-              ) : (
-                <Form
-                  name='basic'
-                  initialValues={{
-                    first_name: user?.first_name,
-                    last_name: user?.last_name,
-                    province: user?.province,
-                    phone: user?.phone,
-                    email: user?.email,
-                  }}
-                  onFinish={onFinish}
-                  autoComplete='off'
-                  layout='vertical'
+            {logged ? (
+              <Form
+                name='basic'
+                initialValues={{
+                  first_name: user?.first_name,
+                  last_name: user?.last_name,
+                  province: user?.province,
+                  phone: user?.phone,
+                  email: user?.email,
+                }}
+                onFinish={onFinish}
+                autoComplete='off'
+                layout='vertical'
+              >
+                <div className='flex justify-between'>
+                  <Form.Item
+                    className='w-[40%]'
+                    label='Tên'
+                    name='first_name'
+                    rules={[{ required: true, message: 'Vui lòng nhập tên!' }]}
+                  >
+                    <Input />
+                  </Form.Item>
+
+                  <Form.Item
+                    className='w-[40%]'
+                    label='Họ'
+                    name='last_name'
+                    rules={[{ required: true, message: 'Vui lòng nhập họ!' }]}
+                  >
+                    <Input />
+                  </Form.Item>
+                </div>
+
+                <Form.Item
+                  label='Địa chỉ'
+                  name='address'
+                  rules={[{ required: true, message: 'Vui lòng nhập địa chỉ!' }]}
                 >
-                  <div className='flex justify-between'>
-                    <Form.Item
-                      className='w-[40%]'
-                      label='Tên'
-                      name='first_name'
-                      rules={[{ required: true, message: 'Vui lòng nhập tên!' }]}
-                    >
-                      <Input />
-                    </Form.Item>
+                  <Input />
+                </Form.Item>
 
-                    <Form.Item
-                      className='w-[40%]'
-                      label='Họ'
-                      name='last_name'
-                      rules={[{ required: true, message: 'Vui lòng nhập họ!' }]}
-                    >
-                      <Input />
-                    </Form.Item>
-                  </div>
+                <Form.Item
+                  label='Tỉnh / Thành phố'
+                  name='province'
+                  rules={[{ required: true, message: 'Vui lòng nhập tỉnh/thành phố!' }]}
+                >
+                  <Input />
+                </Form.Item>
 
-                  <Form.Item
-                    label='Địa chỉ'
-                    name='address'
-                    rules={[{ required: true, message: 'Vui lòng nhập địa chỉ!' }]}
-                  >
-                    <Input />
-                  </Form.Item>
+                <Form.Item
+                  label='Số điện thoại'
+                  name='phone'
+                  rules={[{ required: true, message: 'Vui lòng nhập số điện thoại!' }]}
+                >
+                  <Input />
+                </Form.Item>
 
-                  <Form.Item
-                    label='Tỉnh / Thành phố'
-                    name='province'
-                    rules={[{ required: true, message: 'Vui lòng nhập tỉnh/thành phố!' }]}
-                  >
-                    <Input />
-                  </Form.Item>
+                <Form.Item
+                  label='Địa chỉ email'
+                  name='email'
+                  rules={[{ required: true, message: 'Vui lòng nhập email!' }]}
+                >
+                  <Input />
+                </Form.Item>
 
-                  <Form.Item
-                    label='Số điện thoại'
-                    name='phone'
-                    rules={[{ required: true, message: 'Vui lòng nhập số điện thoại!' }]}
-                  >
-                    <Input />
-                  </Form.Item>
+                <Form.Item label='Ghi chú đơn hàng (tùy chọn)' name='notes'>
+                  <Input.TextArea style={{ minHeight: 100 }} />
+                </Form.Item>
 
-                  <Form.Item
-                    label='Địa chỉ email'
-                    name='email'
-                    rules={[{ required: true, message: 'Vui lòng nhập email!' }]}
-                  >
-                    <Input />
-                  </Form.Item>
-
-                  <Form.Item label='Ghi chú đơn hàng (tùy chọn)' name='notes'>
-                    <Input.TextArea style={{ minHeight: 100 }} />
-                  </Form.Item>
-
-                  <Form.Item>
-                    <Button type='primary' htmlType='submit' className='w-full min-h-[50px]'>
-                      ĐẶT HÀNG
-                    </Button>
-                  </Form.Item>
-                </Form>
-              )
+                <Form.Item>
+                  <Button type='primary' htmlType='submit' className='w-full min-h-[50px]'>
+                    ĐẶT HÀNG
+                  </Button>
+                </Form.Item>
+              </Form>
             ) : (
               <Form name='basic' onFinish={onFinish} autoComplete='off' layout='vertical'>
                 <div className='flex justify-between'>
