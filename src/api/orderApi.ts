@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import apiClient from './apiClient';
 
 const orderApi = {
@@ -6,10 +6,18 @@ const orderApi = {
     const url = '/order';
     return await apiClient.post(url, params);
   },
+  async getUserOrder(userId: any) {
+    const url = '/order/get-user-order';
+    return await apiClient.post(url, userId);
+  },
 };
 
 export const useMutationCreateOrder = () => {
   return useMutation((params: any) => orderApi.createOrder(params));
+};
+
+export const useQueryGetUserOrder = (userId: any) => {
+  return useQuery(['list-user-order', userId], () => orderApi.getUserOrder(userId), { enabled: !!userId });
 };
 
 export default orderApi;
