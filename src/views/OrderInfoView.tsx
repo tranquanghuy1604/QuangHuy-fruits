@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { WalletOutlined, GiftOutlined, CarOutlined, StarOutlined } from '@ant-design/icons';
+import { WalletOutlined, GiftOutlined, CarOutlined, StarOutlined, FileDoneOutlined } from '@ant-design/icons';
 import { Badge } from 'antd';
 import { useQueryGetUser } from '@/api/authApi';
 import { useQueryGetUserOrder } from '@/api/orderApi';
@@ -55,11 +55,18 @@ export default function OrderInfoView() {
           </Badge>
           <div>Chờ giao hàng</div>
         </div>
+
         <button onClick={() => setIsoOpenModal(true)} className='text-center relative'>
           <Badge count={count} offset={[0, 10]}>
             <StarOutlined className='text-2xl' />
           </Badge>
           <div>Đánh giá</div>
+        </button>
+        <button className='text-center relative'>
+          <Badge count={filterStatusUser('pending')} offset={[0, 10]}>
+            <FileDoneOutlined className='text-2xl' />
+          </Badge>
+          <div>Hoàn thành</div>
         </button>
       </div>
       <FormRate item={listOrder} open={isOpenModal} onClose={() => setIsoOpenModal(false)} />
