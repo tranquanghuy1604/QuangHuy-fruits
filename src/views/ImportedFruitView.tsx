@@ -65,7 +65,7 @@ export default function ImportedFruitView() {
               const promoPrice = getPromotionalPrice(item);
               return (
                 <div key={item._id} className='w-full bg-white border-[1px] p-6 rounded-md shadow-lg'>
-                  <Link href={`/product/${FormatUrl(item.name)}`}>
+                  <Link href={`/product/${FormatUrl(item._id)}`}>
                     <div className='overflow-hidden'>
                       <img
                         src={`http://localhost:5000/${item.images}`}

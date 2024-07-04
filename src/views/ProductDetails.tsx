@@ -115,37 +115,37 @@ export default function ProductDetails() {
           </div>
         </div>
         <div className='mt-[50px]'>
-          <h3 className='text-[28px] font-[700] mt-[40px]'>Giới thiệu Cam vàng</h3>
+          <h3 className='text-[28px] font-[700] mt-[40px]'>Giới thiệu {itemProduct?.name}</h3>
           <div className='mt-[10px] text-[18px] font-[500] leading-[28px]'>
-            <p>Cam vàng Úc lần đầu tiên được phát hiện tại nhà vườn ở Brazil năm 1820.</p>
+            <p>{itemProduct?.name} Úc lần đầu tiên được phát hiện tại nhà vườn ở Brazil năm 1820.</p>
             <p>
-              Cam vàng Úc bắt đầu được nhân rộng các nước khác trên thế giới như Mĩ, Bắc Phi, Địa Trung Hải và cả
-              Australia.
+              {itemProduct?.name} Úc bắt đầu được nhân rộng các nước khác trên thế giới như Mĩ, Bắc Phi, Địa Trung Hải
+              và cả Australia.
             </p>
-            <p>Cam vàng Úc là một trong những loại cam phổ biến nhất bây giờ.</p>
-            <p>Cam vàng Úc được người tiêu dùng trên thế giới yêu thích.</p>
+            <p>{itemProduct?.name} Úc là một trong những loại cam phổ biến nhất bây giờ.</p>
+            <p>{itemProduct?.name} Úc được người tiêu dùng trên thế giới yêu thích.</p>
           </div>
           <div>
             <img className='w-full max-w-[500px] mx-auto' src={`http://localhost:5000/${itemProduct?.images}`} alt='' />
           </div>
           <h3 className='text-[28px] font-[700] mt-[40px]'>Đặc điểm</h3>
           <div className='mt-[10px] text-[18px] font-[500] leading-[28px]'>
-            <p>Cam vàng Úc thường to, tròn. Màu vàng óng ả tươi sáng.</p>
-            <p>Cam vàng Úc có phần vỏ mỏng, thơm chứa nhiều tinh dầu tự nhiên.</p>
+            <p>{itemProduct?.name} Úc thường to, tròn. Màu vàng óng ả tươi sáng.</p>
+            <p>{itemProduct?.name} Úc có phần vỏ mỏng, thơm chứa nhiều tinh dầu tự nhiên.</p>
             <p>
-              Múi cam vàng Úc to, tép mọng nước, ít xơ, vị ngọt dịu, thơm mát và đặc trưng ai ai cũng thích là hầu như
-              không có hạt.
+              Múi {itemProduct?.name} Úc to, tép mọng nước, ít xơ, vị ngọt dịu, thơm mát và đặc trưng ai ai cũng thích
+              là hầu như không có hạt.
             </p>
           </div>
           <h3 className='text-[28px] font-[700] mt-[40px]'>Sử dụng và bảo quản</h3>
           <div className='mt-[10px] text-[18px] font-[500] leading-[28px]'>
             <p>
-              Cam vàng Úc vỏ mỏng, ít xơ, ăn tươi là ngon nhất và giúp cơ thể hấp thụ được toàn bộ chất dinh dưỡng có
-              trong quả.
+              {itemProduct?.name} Úc vỏ mỏng, ít xơ, ăn tươi là ngon nhất và giúp cơ thể hấp thụ được toàn bộ chất dinh
+              dưỡng có trong quả.
             </p>
             <p>
-              Cam vàng Úc là cam nhập khẩu nên tốt nhất để trong tủ lạnh với nhiệt độ dưới 10 độ C, tránh tiếp xúc với
-              các loại thực phẩm gây mùi và ẩm ước.
+              {itemProduct?.name} Úc là cam nhập khẩu nên tốt nhất để trong tủ lạnh với nhiệt độ dưới 10 độ C, tránh
+              tiếp xúc với các loại thực phẩm gây mùi và ẩm ước.
             </p>
           </div>
         </div>
