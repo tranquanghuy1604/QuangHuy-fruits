@@ -49,7 +49,7 @@ export default function OrderInfoView() {
           <div>Đánh giá</div>
         </button>
       </div>
-      <FormRate open={isOpenModal} onClose={() => setIsoOpenModal(false)} />
+      <FormRate item={listOrder} open={isOpenModal} onClose={() => setIsoOpenModal(false)} />
     </>
   );
 }
