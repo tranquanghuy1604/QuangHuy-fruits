@@ -15,14 +15,12 @@ export default function ImportedFruitView() {
   const { data: dataPromotion } = useQueryGetAllPromotion();
   const listPromotion = dataPromotion as any;
   const dataCategory = data as any;
-  console.log(dataCategory);
   const { data: dataProductByCategory } = useQueryGetProductByCategory({
     category_id: dataCategory && dataCategory[1]?._id,
   });
   const dataProductCategory = dataProductByCategory as any;
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 12;
-  console.log(dataProductByCategory);
 
   const handlePageChange = (page: any) => {
     setCurrentPage(page);

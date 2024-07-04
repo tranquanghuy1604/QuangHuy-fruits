@@ -7,6 +7,7 @@ import TextArea from 'antd/es/input/TextArea';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { useQueryClient } from 'react-query';
 import { useRecoilState } from 'recoil';
 
 interface ValueLogin {
@@ -18,6 +19,7 @@ export default function LoginForm() {
   const { mutate: login } = useLogin();
   const router = useRouter();
   const [logged, setLogged] = useRecoilState(loggedState);
+  const queryClient = useQueryClient();
 
   const onFinish = (values: ValueLogin) => {
     login(
@@ -26,6 +28,7 @@ export default function LoginForm() {
         onSuccess: (data: any) => {
           localStorage.setItem('authToken', data?.token);
           localStorage.setItem('authToken', data?.token);
+          queryClient.invalidateQueries('user');
           setLogged(true);
           toast.success('Đăng nhập thành công');
           router.push('/');

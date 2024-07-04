@@ -67,7 +67,6 @@ export default function RegionalFruitsView() {
         <div className='grid grid-cols-4 gap-[40px] mt-[40px]'>
           {dataProductCategory &&
             currentData.map((item: any) => {
-              console.log(item);
               const promotionPrice = getPromotionalPrice(item);
               return (
                 <div key={item._id} className='w-full bg-white border-[1px] p-6 rounded-md shadow-lg'>

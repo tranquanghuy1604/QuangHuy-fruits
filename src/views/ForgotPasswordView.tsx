@@ -17,9 +17,6 @@ export default function ForgotPasswordView() {
           toast.success('Mật khẩu đã reset.Hãy kiểm tra mail của bạn');
           router.push('/login');
         },
-        onError: (error) => {
-          console.log(error);
-        },
       },
     );
   };

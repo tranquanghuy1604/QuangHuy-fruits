@@ -1,5 +1,5 @@
 'use client';
-import { Dropdown, Input, MenuProps } from 'antd';
+import { Badge, Dropdown, Input, MenuProps } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -114,11 +114,7 @@ export default function Header() {
         { name: '' },
         {
           onSuccess: (data: any) => {
-            console.log(data?.products);
             setListFindProduct(data?.products);
-          },
-          onError: (error) => {
-            console.log(error);
           },
         },
       );
@@ -127,11 +123,7 @@ export default function Header() {
         { name: searchTerm },
         {
           onSuccess: (data: any) => {
-            console.log(data?.products);
             setListFindProduct(data?.products);
-          },
-          onError: (error) => {
-            console.log(error);
           },
         },
       );
@@ -270,11 +262,10 @@ export default function Header() {
           </div>
           <div className='flex gap-[50px] items-center'>
             {cartItemCount > 0 ? (
-              <Link href='/shopping-cart' className='relative'>
-                <FaBasketShopping className='text-black cursor-pointer text-[40px]' />
-                <span className='text-[14px] bg-red-500 rounded-full px-2 py-1 text-white absolute top-[-15px] right-[-10px]'>
-                  {cartItemCount}
-                </span>
+              <Link href='/shopping-cart'>
+                <Badge count={cartItemCount}>
+                  <FaBasketShopping className='text-black cursor-pointer text-[30px]' />
+                </Badge>
               </Link>
             ) : (
               <Link href='/shopping-cart'>

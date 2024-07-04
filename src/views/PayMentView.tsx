@@ -19,7 +19,6 @@ export default function PayMentView() {
   const { data, isLoading } = useQueryGetUser();
   const [logged, setLogged] = useRecoilState(loggedState);
   const user = data as any;
-  console.log(user);
   const { mutate: createOrder } = useMutationCreateOrder();
   useEffect(() => {
     const cartTotal = cart.reduce((acc: any, item: any) => acc + item.price * item.quantity, 0);
@@ -50,6 +49,7 @@ export default function PayMentView() {
           }),
           customer_id: user?._id,
           ship_code: Math.floor(total * 0.01),
+          product_name: cart.map((item: any) => item.name),
         },
         {
           onSuccess: (data) => {
