@@ -14,6 +14,10 @@ const orderApi = {
     const url = '/order/get-user-order';
     return await apiClient.post(url, userId);
   },
+  async getOrderFinish(userId: any) {
+    const url = '/order/get-order-finish';
+    return await apiClient.post(url, userId);
+  },
 };
 
 export const useMutationCreateOrder = () => {
@@ -26,6 +30,10 @@ export const useQueryGetOrders = () => {
 
 export const useQueryGetUserOrder = (userId: any) => {
   return useQuery(['list-user-order', userId], () => orderApi.getUserOrder(userId), { enabled: !!userId });
+};
+
+export const useQueryGetOrderFinish = (userId: any) => {
+  return useQuery(['list-order-finish', userId], () => orderApi.getOrderFinish(userId), { enabled: !!userId });
 };
 
 export default orderApi;

@@ -5,16 +5,16 @@ import { Badge } from 'antd';
 import { useQueryGetUser } from '@/api/authApi';
 import { useQueryGetUserOrder } from '@/api/orderApi';
 import FormRate from '@/components/order-info/FormRate';
+import TabFinishOrder from '@/components/order-info/TabFinishOrder';
 
 export default function OrderInfoView() {
+  const [isOpenTab, setIsOpenTab] = useState(false);
   const [isOpenModal, setIsoOpenModal] = useState(false);
   const { data } = useQueryGetUser();
   const user = data as any;
   const { data: order } = useQueryGetUserOrder({ userId: user?._id });
   const listOrder = order as any;
   let count;
-
-  console.log(listOrder);
 
   const filterStatusUser = (status: any) => {
     return listOrder?.reduce((acc: number, itemOrder: any) => {
@@ -62,13 +62,14 @@ export default function OrderInfoView() {
           </Badge>
           <div>Đánh giá</div>
         </button>
-        <button className='text-center relative'>
+        <button onClick={() => setIsOpenTab(!isOpenTab)} className='text-center relative'>
           <Badge count={filterStatusUser('pending')} offset={[0, 10]}>
             <FileDoneOutlined className='text-2xl' />
           </Badge>
           <div>Hoàn thành</div>
         </button>
       </div>
+      {isOpenTab && <TabFinishOrder userId={user?._id} />}
       <FormRate item={listOrder} open={isOpenModal} onClose={() => setIsoOpenModal(false)} />
     </>
   );
