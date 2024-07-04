@@ -49,7 +49,9 @@ export default function PayMentView() {
           }),
           customer_id: user?._id,
           ship_code: Math.floor(total * 0.01),
-          product_name: cart.map((item: any) => item.name),
+          product_name: cart.map((item: any) => {
+            return { productName: item?.name, quantity: item?.quantity };
+          }),
         },
         {
           onSuccess: (data) => {
@@ -71,6 +73,8 @@ export default function PayMentView() {
       </div>
     );
   }
+
+  console.log(cart.map((item: any) => item.quantity));
 
   return (
     <div className='text-[#000] mt-[40px] px-16'>

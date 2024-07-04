@@ -12,13 +12,11 @@ export default function FormRate({ item, open, onClose }: any) {
       { order_id: values.product_name, rate: values.rate, content: values.content },
       {
         onSuccess: (data) => {
-          console.log(data);
           toast.success('Đánh giá thành công');
           onClose();
         },
       },
     );
-    console.log(values);
   };
   return (
     <Modal centered open={open} onCancel={onClose} footer={false}>

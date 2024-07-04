@@ -22,19 +22,18 @@ export default function OrderInfoView() {
     }, 0);
   };
 
-  useEffect(() => {
-    const filterRewardOrder = () => {
-      return listOrder?.reduce((acc: any, item: any) => {
-        if (item?.rates.length === 0) {
-          acc === 0;
-        } else {
-          acc++;
-        }
-        return acc;
-      }, 0);
-    };
-    count = filterRewardOrder();
-  }, [listOrder]);
+  const filterRewardOrder = () => {
+    return listOrder?.reduce((acc: any, item: any) => {
+      if (item?.rates.length === 0) {
+        acc === 0;
+      } else {
+        acc++;
+      }
+      return acc;
+    }, 0);
+  };
+  count = filterRewardOrder();
+
   return (
     <>
       <div className='flex justify-around mt-[100px] text-black w-full max-w-[800px] mx-auto'>
