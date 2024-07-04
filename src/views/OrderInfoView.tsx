@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { WalletOutlined, GiftOutlined, CarOutlined, StarOutlined } from '@ant-design/icons';
 import { Badge } from 'antd';
 import { useQueryGetUser } from '@/api/authApi';
@@ -12,6 +12,7 @@ export default function OrderInfoView() {
   const user = data as any;
   const { data: order } = useQueryGetUserOrder({ userId: user?._id });
   const listOrder = order as any;
+  let count;
 
   console.log(listOrder);
 
@@ -21,6 +22,19 @@ export default function OrderInfoView() {
     }, 0);
   };
 
+  useEffect(() => {
+    const filterRewardOrder = () => {
+      return listOrder?.reduce((acc: any, item: any) => {
+        if (item?.rates.length === 0) {
+          acc === 0;
+        } else {
+          acc++;
+        }
+        return acc;
+      }, 0);
+    };
+    count = filterRewardOrder();
+  }, [listOrder]);
   return (
     <>
       <div className='flex justify-around mt-[100px] text-black w-full max-w-[800px] mx-auto'>
@@ -43,7 +57,7 @@ export default function OrderInfoView() {
           <div>Chờ giao hàng</div>
         </div>
         <button onClick={() => setIsoOpenModal(true)} className='text-center relative'>
-          <Badge count={0} offset={[0, 10]}>
+          <Badge count={count} offset={[0, 10]}>
             <StarOutlined className='text-2xl' />
           </Badge>
           <div>Đánh giá</div>

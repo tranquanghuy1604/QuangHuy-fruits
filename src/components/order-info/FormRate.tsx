@@ -1,10 +1,23 @@
 import { useQueryGetOrders } from '@/api/orderApi';
+import { useMutationCreateRate } from '@/api/rateApi';
 import { Button, Form, Input, Modal, Select } from 'antd';
 import React from 'react';
 import { FaStar } from 'react-icons/fa6';
+import toast from 'react-hot-toast';
 
 export default function FormRate({ item, open, onClose }: any) {
+  const { mutate: createRate } = useMutationCreateRate();
   const onFinish = (values: any) => {
+    createRate(
+      { order_id: values.product_name, rate: values.rate, content: values.content },
+      {
+        onSuccess: (data) => {
+          console.log(data);
+          toast.success('Đánh giá thành công');
+          onClose();
+        },
+      },
+    );
     console.log(values);
   };
   return (
