@@ -3,7 +3,7 @@ import { useQueryGetUser } from '@/api/authApi';
 import { useMutationCreateOrder } from '@/api/orderApi';
 import { cartState, loggedState } from '@/recoil/common.recoil';
 import { FormatPrice } from '@/utils/fomartPrice';
-import { Button, Input, Select, Form } from 'antd';
+import { Button, Input, Select, Form, Spin } from 'antd';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -65,7 +65,11 @@ export default function PayMentView() {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className='flex justify-center items-center mt-[100px]'>
+        <Spin />
+      </div>
+    );
   }
 
   return (

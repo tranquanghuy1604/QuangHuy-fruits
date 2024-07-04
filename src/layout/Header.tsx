@@ -20,6 +20,8 @@ import { cartState, loggedState } from '@/recoil/common.recoil';
 import { useRouter } from 'next/navigation';
 import ChangePassWordModal from './ChangePassWordModal';
 import { useMutationFindProduct } from '@/api/productApi';
+import { useQueryGetUser } from '@/api/authApi';
+import FormEditInfoUser from './FormChangeInfoUser';
 
 const productMenuItems: MenuProps['items'] = [
   {
@@ -85,8 +87,11 @@ export default function Header() {
   const [cart, setCart] = useRecoilState(cartState);
   const [cartItemCount, setCartItemCount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpenInfo, setIsModalOpenInfo] = useState(false);
   const [logged, setLogged] = useRecoilState(loggedState);
   const router = useRouter();
+  const { data } = useQueryGetUser();
+  const user = data as any;
   const { mutate: findProduct } = useMutationFindProduct();
   const [listFindProduct, setListFindProduct] = useState<any>([]);
 
@@ -136,7 +141,7 @@ export default function Header() {
   const userMenuItems: MenuProps['items'] = [
     {
       key: '1',
-      label: <button>Thông tin cá nhân</button>,
+      label: <button onClick={() => setIsModalOpenInfo(true)}>Thông tin cá nhân</button>,
     },
     {
       key: '2',
@@ -204,7 +209,9 @@ export default function Header() {
           <div>
             {logged ? (
               <div className='flex gap-[10px] items-center'>
-                <p>Huy</p>
+                <p>
+                  {user?.last_name} {user?.first_name}
+                </p>
                 <Dropdown menu={{ items: userMenuItems }} placement='bottomRight'>
                   <button>
                     <FaCircleUser className='text-[28px]' />
@@ -278,6 +285,7 @@ export default function Header() {
         </div>
       </div>
       <ChangePassWordModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <FormEditInfoUser open={isModalOpenInfo} item={user} onClose={() => setIsModalOpenInfo(false)} />
     </>
   );
 }

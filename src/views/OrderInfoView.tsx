@@ -18,7 +18,7 @@ export default function OrderInfoView() {
   };
 
   return (
-    <div className='flex justify-around mt-8 text-black'>
+    <div className='flex justify-around mt-[100px] text-black'>
       <div className='text-center'>
         <Badge count={filterStatusUser('waiting-confirm')} offset={[0, 5]}>
           <WalletOutlined className='text-2xl' />

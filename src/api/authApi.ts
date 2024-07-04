@@ -29,6 +29,10 @@ const authApi = {
     const url = '/user/getUser';
     return apiClient.get(url);
   },
+  editUser(userId: any, params: any) {
+    const url = `/user/${userId}`;
+    return apiClient.put(url, params);
+  },
 };
 
 export const useLogin = () => {
@@ -53,6 +57,10 @@ export const useMutationForgotPassword = () => {
 
 export const useQueryGetUser = () => {
   return useQuery(['user'], authApi.getUser);
+};
+
+export const useMutationEditUser = (userId: any) => {
+  return useMutation((params: any) => authApi.editUser(userId, params));
 };
 
 export default authApi;
