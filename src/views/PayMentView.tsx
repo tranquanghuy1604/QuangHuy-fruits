@@ -38,6 +38,7 @@ export default function PayMentView() {
       email: values.email,
       address: values.address,
     };
+
     if (user) {
       if (value === 1) {
         createOrder(
@@ -76,33 +77,6 @@ export default function PayMentView() {
             },
           },
         );
-        // createOrder(
-        //   {
-        //     customer: infoUser,
-        //     created_at: new Date(),
-        //     payment: true,
-        //     payment_method: 'online',
-        //     note: values.notes,
-        //     total_price: 0,
-        //     products: cart.map((r: any) => {
-        //       return {
-        //         product: r._id,
-        //         quantity: r.quantity,
-        //       };
-        //     }),
-        //     customer_id: user?._id,
-        //     ship_code: Math.floor(total * 0.05),
-        //     product_name: cart.map((item: any) => {
-        //       return { productName: item?.name, quantity: item?.quantity };
-        //     }),
-        //   },
-        //   {
-        //     onSuccess: (data) => {
-        //       setCart([]);
-        //       toast.success('Đặt hàng thành công');
-        //     },
-        //   },
-        // );
       }
     } else {
       toast.error('Bạn phải đăng nhập tài khoản để thanh toán');

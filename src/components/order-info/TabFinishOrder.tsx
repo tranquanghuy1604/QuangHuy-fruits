@@ -9,8 +9,11 @@ export default function TabFinishOrder({ userId }: any) {
   const listOrderFinish = data as any;
   return (
     <div className='mt-[40px] text-black w-full max-w-[800px] mx-auto'>
-      {listOrderFinish?.map((item: any) => (
-        <div className='mt-[30px] flex justify-between items-center p-4 border border-[#ccc] rounded-lg shadow-sm'>
+      {listOrderFinish?.map((item: any, index: any) => (
+        <div
+          key={index}
+          className='mt-[30px] flex justify-between items-center p-4 border border-[#ccc] rounded-lg shadow-sm'
+        >
           <div>
             <p className='text-xl font-semibold'>Đơn hàng</p>
             <h2 className='text-lg font-semibold mt-2'>
