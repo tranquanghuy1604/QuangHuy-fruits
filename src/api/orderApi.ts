@@ -22,6 +22,10 @@ const orderApi = {
     const url = '/payment/create-payment-url';
     return await apiClient.post(url, params);
   },
+  async checkPayment() {
+    const url = '/payment/order-status';
+    return await apiClient.post(url);
+  },
 };
 
 export const useMutationCreateOrder = () => {

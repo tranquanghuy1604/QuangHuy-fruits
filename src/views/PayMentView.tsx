@@ -1,6 +1,6 @@
 'use client';
 import { useQueryGetUser } from '@/api/authApi';
-import { useMutationCreateOrder, useMutationPaymentOrder } from '@/api/orderApi';
+import orderApi, { useMutationCreateOrder, useMutationPaymentOrder } from '@/api/orderApi';
 import { cartState, loggedState } from '@/recoil/common.recoil';
 import { FormatPrice } from '@/utils/fomartPrice';
 import { Button, Input, Select, Form, Spin, Radio, RadioChangeEvent } from 'antd';
@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { useMutation } from 'react-query';
 import { useRecoilState } from 'recoil';
 
 const { Option } = Select;
@@ -30,6 +31,11 @@ export default function PayMentView() {
   }, [cart]);
 
   const { mutate: paymentOrder } = useMutationPaymentOrder();
+  const checkPayment = useMutation(orderApi.checkPayment, {
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
 
   const onFinish = (values: any) => {
     const infoUser = {
@@ -73,7 +79,7 @@ export default function PayMentView() {
           { total: total },
           {
             onSuccess: (data: any) => {
-              router.push(`${data?.payUrl}`);
+              router.push(`${data?.order_url}`);
             },
           },
         );
