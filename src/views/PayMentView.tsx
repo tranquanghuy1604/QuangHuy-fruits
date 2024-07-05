@@ -1,9 +1,10 @@
 'use client';
 import { useQueryGetUser } from '@/api/authApi';
-import { useMutationCreateOrder } from '@/api/orderApi';
+import { useMutationCreateOrder, useMutationPaymentOrder } from '@/api/orderApi';
 import { cartState, loggedState } from '@/recoil/common.recoil';
 import { FormatPrice } from '@/utils/fomartPrice';
-import { Button, Input, Select, Form, Spin } from 'antd';
+import { Button, Input, Select, Form, Spin, Radio, RadioChangeEvent } from 'antd';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -12,6 +13,9 @@ import { useRecoilState } from 'recoil';
 const { Option } = Select;
 
 export default function PayMentView() {
+  const [value, setValue] = useState(1);
+  const [urlPayment, setUrlPayment] = useState('');
+
   const router = useRouter();
   const [isActive, setIsActive] = useState(false);
   const [cart, setCart] = useRecoilState(cartState);
@@ -25,6 +29,8 @@ export default function PayMentView() {
     setTotal(cartTotal);
   }, [cart]);
 
+  const { mutate: paymentOrder } = useMutationPaymentOrder();
+
   const onFinish = (values: any) => {
     const infoUser = {
       fullname: values.first_name + ' ' + values.last_name,
@@ -33,38 +39,82 @@ export default function PayMentView() {
       address: values.address,
     };
     if (user) {
-      createOrder(
-        {
-          customer: infoUser,
-          created_at: new Date(),
-          payment: true,
-          payment_method: 'offline',
-          note: values.notes,
-          total_price: total,
-          products: cart.map((r: any) => {
-            return {
-              product: r._id,
-              quantity: r.quantity,
-            };
-          }),
-          customer_id: user?._id,
-          ship_code: Math.floor(total * 0.01),
-          product_name: cart.map((item: any) => {
-            return { productName: item?.name, quantity: item?.quantity };
-          }),
-        },
-        {
-          onSuccess: (data) => {
-            setCart([]);
-            toast.success('Đặt hàng thành công');
+      if (value === 1) {
+        createOrder(
+          {
+            customer: infoUser,
+            created_at: new Date(),
+            payment: true,
+            payment_method: 'offline',
+            note: values.notes,
+            total_price: total,
+            products: cart.map((r: any) => {
+              return {
+                product: r._id,
+                quantity: r.quantity,
+              };
+            }),
+            customer_id: user?._id,
+            ship_code: Math.floor(total * 0.05),
+            product_name: cart.map((item: any) => {
+              return { productName: item?.name, quantity: item?.quantity };
+            }),
           },
-        },
-      );
+          {
+            onSuccess: (data) => {
+              setCart([]);
+              toast.success('Đặt hàng thành công');
+            },
+          },
+        );
+      } else {
+        paymentOrder(
+          { total: total },
+          {
+            onSuccess: (data: any) => {
+              router.push(`${data?.payUrl}`);
+            },
+          },
+        );
+        // createOrder(
+        //   {
+        //     customer: infoUser,
+        //     created_at: new Date(),
+        //     payment: true,
+        //     payment_method: 'online',
+        //     note: values.notes,
+        //     total_price: 0,
+        //     products: cart.map((r: any) => {
+        //       return {
+        //         product: r._id,
+        //         quantity: r.quantity,
+        //       };
+        //     }),
+        //     customer_id: user?._id,
+        //     ship_code: Math.floor(total * 0.05),
+        //     product_name: cart.map((item: any) => {
+        //       return { productName: item?.name, quantity: item?.quantity };
+        //     }),
+        //   },
+        //   {
+        //     onSuccess: (data) => {
+        //       setCart([]);
+        //       toast.success('Đặt hàng thành công');
+        //     },
+        //   },
+        // );
+      }
     } else {
       toast.error('Bạn phải đăng nhập tài khoản để thanh toán');
       router.push('/login');
     }
   };
+
+  const onChange = (e: RadioChangeEvent) => {
+    setValue(e.target.value);
+  };
+
+  console.log(value);
 
   if (isLoading) {
     return (
@@ -73,8 +123,6 @@ export default function PayMentView() {
       </div>
     );
   }
-
-  console.log(cart.map((item: any) => item.quantity));
 
   return (
     <div className='text-[#000] mt-[40px] px-16'>
@@ -252,6 +300,12 @@ export default function PayMentView() {
               Thông tin cá nhân của bạn sẽ được sử dụng để xử lý đơn hàng, tăng trải nghiệm sử dụng website, và cho các
               mục đích cụ thể khác đã được mô tả trong chính sách riêng tư.
             </p>
+            <Radio.Group className='mt-[20px]' onChange={onChange} value={value}>
+              <Radio value={1}>Thanh toán bằng tiền mặt</Radio> <br />
+              <Radio className='mt-[8px]' value={2}>
+                Thanh Toán bằng MOMO
+              </Radio>
+            </Radio.Group>
           </div>
         </div>
       </div>
