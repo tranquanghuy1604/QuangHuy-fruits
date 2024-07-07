@@ -1,14 +1,12 @@
 'use client';
 import { useQueryGetUser } from '@/api/authApi';
-import orderApi, { useMutationCreateOrder, useMutationPaymentOrder } from '@/api/orderApi';
+import { useMutationCheckPaymentOrder, useMutationCreateOrder, useMutationPaymentOrder } from '@/api/orderApi';
 import { cartState, loggedState } from '@/recoil/common.recoil';
 import { FormatPrice } from '@/utils/fomartPrice';
-import { Button, Input, Select, Form, Spin, Radio, RadioChangeEvent } from 'antd';
-import Link from 'next/link';
+import { Button, Form, Input, Radio, RadioChangeEvent, Select, Spin } from 'antd';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useMutation } from 'react-query';
 import { useRecoilState } from 'recoil';
 
 const { Option } = Select;
@@ -31,11 +29,8 @@ export default function PayMentView() {
   }, [cart]);
 
   const { mutate: paymentOrder } = useMutationPaymentOrder();
-  const checkPayment = useMutation(orderApi.checkPayment, {
-    onSuccess: (data) => {
-      console.log(data);
-    },
-  });
+
+  const { mutate: checkPayment } = useMutationCheckPaymentOrder();
 
   const onFinish = (values: any) => {
     const infoUser = {
@@ -79,7 +74,39 @@ export default function PayMentView() {
           { total: total },
           {
             onSuccess: (data: any) => {
+              // checkPayment({} as any, {
+              //   onSuccess: (data) => {
+              //     console.log('data', data);
+              //   },
+              // });
               router.push(`${data?.order_url}`);
+              createOrder(
+                {
+                  customer: infoUser,
+                  created_at: new Date(),
+                  payment: true,
+                  payment_method: 'online',
+                  note: values.notes,
+                  total_price: total,
+                  products: cart.map((r: any) => {
+                    return {
+                      product: r._id,
+                      quantity: r.quantity,
+                    };
+                  }),
+                  customer_id: user?._id,
+                  ship_code: Math.floor(total * 0.05),
+                  product_name: cart.map((item: any) => {
+                    return { productName: item?.name, quantity: item?.quantity };
+                  }),
+                },
+                {
+                  onSuccess: (data) => {
+                    setCart([]);
+                    toast.success('Đặt hàng thành công');
+                  },
+                },
+              );
             },
           },
         );

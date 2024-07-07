@@ -22,9 +22,9 @@ const orderApi = {
     const url = '/payment/create-payment-url';
     return await apiClient.post(url, params);
   },
-  async checkPayment() {
+  async checkPayment(params: any) {
     const url = '/payment/order-status';
-    return await apiClient.post(url);
+    return await apiClient.post(url, params);
   },
 };
 
@@ -46,6 +46,10 @@ export const useQueryGetOrderFinish = (userId: any) => {
 
 export const useMutationPaymentOrder = () => {
   return useMutation((params: any) => orderApi.paymentOrder(params));
+};
+
+export const useMutationCheckPaymentOrder = () => {
+  return useMutation((params: any) => orderApi.checkPayment(params));
 };
 
 export default orderApi;
