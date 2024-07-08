@@ -25,6 +25,9 @@ export default function RegisterForm() {
           toast.success('Đăng ký thành công');
           router.push('/login');
         },
+        onError: () => {
+          toast.error('Đăng ký thất bại');
+        },
       },
     );
   };

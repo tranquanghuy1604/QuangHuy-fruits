@@ -32,6 +32,9 @@ export default function LoginForm() {
           toast.success('Đăng nhập thành công');
           router.push('/');
         },
+        onError: () => {
+          toast.error('Đăng nhập thất bại');
+        },
       },
     );
   };
