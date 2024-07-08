@@ -5,9 +5,8 @@ import { useQueryGetAllPromotion } from '@/api/promotionApi';
 import { cartState } from '@/recoil/common.recoil';
 import { FormatPrice, FormatUrl } from '@/utils/fomartPrice';
 import { Button, Pagination } from 'antd';
-import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 export default function RegionalFruitsView() {

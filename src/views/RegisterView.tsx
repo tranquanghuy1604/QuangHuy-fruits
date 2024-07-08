@@ -1,14 +1,13 @@
 'use client';
-import React, { useEffect } from 'react';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Modal, Select } from 'antd';
-import Link from 'next/link';
 import { useRegister } from '@/api/authApi';
-import { toast } from 'react-toastify';
-import { useForm } from 'antd/es/form/Form';
+import { Button, Checkbox, Form, Input, Select } from 'antd';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 export default function RegisterForm() {
   const { mutate: register } = useRegister();
+  const router = useRouter();
   const onFinish = (values: any) => {
     register(
       {
@@ -24,6 +23,7 @@ export default function RegisterForm() {
       {
         onSuccess: (data) => {
           toast.success('Đăng ký thành công');
+          router.push('/login');
         },
       },
     );

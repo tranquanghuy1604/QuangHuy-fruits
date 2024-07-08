@@ -1,9 +1,8 @@
 'use client';
 import { useLogin } from '@/api/authApi';
 import { loggedState } from '@/recoil/common.recoil';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LockOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
-import TextArea from 'antd/es/input/TextArea';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
