@@ -38,7 +38,7 @@ const productMenuItems: MenuProps['items'] = [
     className: 'custom-dropdown-item',
     label: (
       <Link href='/regional-fruits' className=''>
-        Hoa quả vùng miền
+        Hoa quả xuất khẩu
       </Link>
     ),
   },
@@ -168,110 +168,114 @@ export default function Header() {
 
   return (
     <>
-      <div className='w-full bg-[#00C42E] text-white '>
-        <div className='flex w-full max-w-[1440px] mx-auto justify-between items-center h-[50px] py-[5px] px-16'>
-          <div className='flex items-center gap-[20px]'>
-            <Link href='#'>
-              <FaFacebook />
-            </Link>
-            <Link href='#'>
-              <FaInstagram />
-            </Link>
-            <Link href='#'>
-              <FaTiktok />
-            </Link>
-            <Link href='#'>
-              <FaTwitter />
-            </Link>
-            <Link href='#'>
-              <FaYoutube />
-            </Link>
-          </div>
-          <div className='justify-between w-full flex gap-[10px] items-center flex-1 max-w-[500px] text-black h-full bg-white mx-auto items-centers rounded-[8px] px-[8px]'>
-            <Dropdown className='w-full' menu={{ items: userFindProducts }} trigger={['click']}>
-              <Input
-                onChange={handleInputChange}
-                type='text'
-                placeholder='Tìm kiếm'
-                className='flex-1 outline-none border-none active:!border-none'
-              />
-            </Dropdown>
-            <FaSearch className='cursor-pointer' />
-          </div>
-          <div>
-            {logged ? (
-              <div className='flex gap-[10px] items-center'>
-                <p>
-                  {user?.last_name} {user?.first_name}
-                </p>
-                <Dropdown menu={{ items: userMenuItems }} placement='bottomRight'>
-                  <button>
-                    <FaCircleUser className='text-[28px]' />
-                  </button>
-                </Dropdown>
-              </div>
-            ) : (
-              <div className='flex gap-[8px] items-center'>
-                <Link className='hover:text-[#cccc] transition-all text-[16px] font-[400] leading-[24px]' href='/login'>
-                  Đăng nhập
-                </Link>
-                <p className='w-[1px] h-[10px] bg-black'></p>
-                <Link
-                  className='hover:text-[#cccc] transition-all text-[16px] font-[400] leading-[24px]'
-                  href='/register'
-                >
-                  Đăng ký
-                </Link>
-              </div>
-            )}
+      <div className='fixed top-0 left-0 z-[1000] w-full'>
+        <div className='w-full bg-[#00C42E] text-white '>
+          <div className='flex w-full max-w-[1440px] mx-auto justify-between items-center h-[50px] py-[5px] px-16'>
+            <div className='flex items-center gap-[20px]'>
+              <Link href='#'>
+                <FaFacebook />
+              </Link>
+              <Link href='#'>
+                <FaInstagram />
+              </Link>
+              <Link href='#'>
+                <FaTiktok />
+              </Link>
+              <Link href='#'>
+                <FaTwitter />
+              </Link>
+              <Link href='#'>
+                <FaYoutube />
+              </Link>
+            </div>
+            <div className='justify-between w-full flex gap-[10px] items-center flex-1 max-w-[500px] text-black h-full bg-white mx-auto items-centers rounded-[8px] px-[8px]'>
+              <Dropdown className='w-full' menu={{ items: userFindProducts }} trigger={['click']}>
+                <Input
+                  onChange={handleInputChange}
+                  type='text'
+                  placeholder='Tìm kiếm'
+                  className='flex-1 outline-none border-none active:!border-none'
+                />
+              </Dropdown>
+              <FaSearch className='cursor-pointer' />
+            </div>
+            <div>
+              {logged ? (
+                <div className='flex gap-[10px] items-center'>
+                  <p>
+                    {user?.last_name} {user?.first_name}
+                  </p>
+                  <Dropdown menu={{ items: userMenuItems }} placement='bottomRight'>
+                    <button>
+                      <FaCircleUser className='text-[28px]' />
+                    </button>
+                  </Dropdown>
+                </div>
+              ) : (
+                <div className='flex gap-[8px] items-center'>
+                  <Link
+                    className='hover:text-[#cccc] transition-all text-[16px] font-[400] leading-[24px]'
+                    href='/login'
+                  >
+                    Đăng nhập
+                  </Link>
+                  <p className='w-[1px] h-[10px] bg-black'></p>
+                  <Link
+                    className='hover:text-[#cccc] transition-all text-[16px] font-[400] leading-[24px]'
+                    href='/register'
+                  >
+                    Đăng ký
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-
-      <div className='border-b-[1px] border-[#000]'>
-        <div className='w-full max-w-[1440px] mx-auto flex justify-between items-center text-[#000] h-[60px] px-16'>
-          <Link href='/'>
-            <Image src='/image/home/logo.jpg' width={50} height={20} alt='' />
-          </Link>
-          <div>
-            <ul className='flex items-center gap-[20px] font-[700]'>
-              <li className='cursor-pointer transition-all'>
-                <Dropdown menu={{ items: productMenuItems }} overlayClassName='custom-dropdown-menu'>
-                  <button className='flex items-center gap-[5px]'>
-                    Sản phẩm <DownOutlined className='text-[13px]' />
-                  </button>
-                </Dropdown>
-              </li>
-              <li className='cursor-pointer'>
-                <Dropdown menu={{ items: userNewsMenu }} overlayClassName='custom-dropdown-menu'>
-                  <button className='flex items-center gap-[5px] '>
-                    Tin tức <DownOutlined className='text-[13px]' />
-                  </button>
-                </Dropdown>
-              </li>
-              <li className='cursor-pointer'>
-                <Link href='/season-fruits'>Mùa trái cây thế giới</Link>
-              </li>
-              <li className='cursor-pointer'>
-                <Link href='/introduce'>Giới thiệu</Link>
-              </li>
-              <li className='cursor-pointer'>
-                <Link href='#'>Liên hệ</Link>
-              </li>
-            </ul>
-          </div>
-          <div className='flex gap-[50px] items-center'>
-            {cartItemCount > 0 ? (
-              <Link href='/shopping-cart'>
-                <Badge count={cartItemCount}>
+        <div className='border-b-[1px] border-[#000] bg-white'>
+          <div className='w-full max-w-[1440px] mx-auto flex justify-between items-center text-[#000] h-[60px] px-16'>
+            <Link href='/'>
+              <Image src='/image/home/logo.jpg' width={50} height={20} alt='' />
+            </Link>
+            <div>
+              <ul className='flex items-center gap-[20px] font-[700]'>
+                <li className='cursor-pointer transition-all'>
+                  <Dropdown menu={{ items: productMenuItems }} overlayClassName='custom-dropdown-menu'>
+                    <button className='flex items-center gap-[5px]'>
+                      Sản phẩm <DownOutlined className='text-[13px]' />
+                    </button>
+                  </Dropdown>
+                </li>
+                <li className='cursor-pointer'>
+                  <Dropdown menu={{ items: userNewsMenu }} overlayClassName='custom-dropdown-menu'>
+                    <button className='flex items-center gap-[5px] '>
+                      Tin tức <DownOutlined className='text-[13px]' />
+                    </button>
+                  </Dropdown>
+                </li>
+                <li className='cursor-pointer'>
+                  <Link href='/season-fruits'>Mùa trái cây thế giới</Link>
+                </li>
+                <li className='cursor-pointer'>
+                  <Link href='/introduce'>Giới thiệu</Link>
+                </li>
+                <li className='cursor-pointer'>
+                  <Link href='#'>Liên hệ</Link>
+                </li>
+              </ul>
+            </div>
+            <div className='flex gap-[50px] items-center'>
+              {cartItemCount > 0 ? (
+                <Link href='/shopping-cart'>
+                  <Badge count={cartItemCount}>
+                    <FaBasketShopping className='text-black cursor-pointer text-[30px]' />
+                  </Badge>
+                </Link>
+              ) : (
+                <Link href='/shopping-cart'>
                   <FaBasketShopping className='text-black cursor-pointer text-[30px]' />
-                </Badge>
-              </Link>
-            ) : (
-              <Link href='/shopping-cart'>
-                <FaBasketShopping className='text-black cursor-pointer text-[30px]' />
-              </Link>
-            )}
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </div>

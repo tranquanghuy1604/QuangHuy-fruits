@@ -1,22 +1,17 @@
 'use client';
 import { useQueryGetUser } from '@/api/authApi';
-import { useMutationCheckPaymentOrder, useMutationCreateOrder, useMutationPaymentOrder } from '@/api/orderApi';
+import { useMutationCreateOrder, useMutationPaymentOrder } from '@/api/orderApi';
 import { cartState, loggedState } from '@/recoil/common.recoil';
 import { FormatPrice } from '@/utils/fomartPrice';
-import { Button, Form, Input, Radio, RadioChangeEvent, Select, Spin } from 'antd';
+import { Button, Form, Input, Radio, RadioChangeEvent, Spin } from 'antd';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useRecoilState } from 'recoil';
 
-const { Option } = Select;
-
 export default function PayMentView() {
   const [value, setValue] = useState(1);
-  const [urlPayment, setUrlPayment] = useState('');
-
   const router = useRouter();
-  const [isActive, setIsActive] = useState(false);
   const [cart, setCart] = useRecoilState(cartState);
   const [total, setTotal] = useState(0);
   const { data, isLoading } = useQueryGetUser();
@@ -29,8 +24,6 @@ export default function PayMentView() {
   }, [cart]);
 
   const { mutate: paymentOrder } = useMutationPaymentOrder();
-
-  const { mutate: checkPayment } = useMutationCheckPaymentOrder();
 
   const onFinish = (values: any) => {
     const infoUser = {
@@ -65,6 +58,7 @@ export default function PayMentView() {
           {
             onSuccess: (data) => {
               setCart([]);
+              localStorage.removeItem('cart');
               toast.success('Đặt hàng thành công');
             },
           },
@@ -74,11 +68,6 @@ export default function PayMentView() {
           { total: total },
           {
             onSuccess: (data: any) => {
-              // checkPayment({} as any, {
-              //   onSuccess: (data) => {
-              //     console.log('data', data);
-              //   },
-              // });
               router.push(`${data?.order_url}`);
               createOrder(
                 {
@@ -103,7 +92,7 @@ export default function PayMentView() {
                 {
                   onSuccess: (data) => {
                     setCart([]);
-                    toast.success('Đặt hàng thành công');
+                    localStorage.removeItem('cart');
                   },
                 },
               );
@@ -310,7 +299,7 @@ export default function PayMentView() {
             <Radio.Group className='mt-[20px]' onChange={onChange} value={value}>
               <Radio value={1}>Thanh toán bằng tiền mặt</Radio> <br />
               <Radio className='mt-[8px]' value={2}>
-                Thanh Toán bằng MOMO
+                Thanh Toán bằng Zalopay
               </Radio>
             </Radio.Group>
           </div>

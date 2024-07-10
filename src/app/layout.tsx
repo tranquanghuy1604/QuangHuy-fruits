@@ -43,9 +43,9 @@ export default function RootLayout({
         <RecoilRoot>
           <Toaster position='top-right' />
           <QueryClientProvider client={queryClient}>
-            <div className='flex flex-col min-h-screen'>
+            <div className='relative flex flex-col min-h-screen'>
               <Header />
-              <div className='flex-grow w-full max-w-[1440px] mx-auto px-[16px]'>{children}</div>
+              <div className='mt-[110px] flex-grow w-full max-w-[1440px] mx-auto px-[16px]'>{children}</div>
               <Footer />
             </div>
           </QueryClientProvider>
