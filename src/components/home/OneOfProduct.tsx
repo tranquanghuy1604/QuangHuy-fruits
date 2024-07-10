@@ -48,7 +48,7 @@ export default function OnOfProduct() {
           {listProduct?.map((item: any, indx: any) => {
             if (indx < 5) {
               return (
-                <SwiperSlide className='shadow-lg p-4 border-[1px] border-solid border-[#cccc] w-full'>
+                <SwiperSlide key={item?._id} className='shadow-lg p-4 border-[1px] border-solid border-[#cccc] w-full'>
                   <div className='overflow-hidden'>
                     <img
                       className='object-cover w-[300px] h-[200px] hover:scale-[1.3] transition-all overflow-hidden'
