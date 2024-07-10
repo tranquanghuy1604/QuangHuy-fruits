@@ -160,7 +160,7 @@ export default function Header() {
     key: `${item._id}`,
     label: (
       <div className='flex gap-[20px]'>
-        <img src={`http://localhost:5000/${item.images}`} className='w-[20px] h-[20px]' alt='' />
+        <Image width={20} height={20} src={`http://localhost:5000/${item.images}`} alt='' />
         <Link href={`product/${item?._id}`}>{item.name}</Link>
       </div>
     ),

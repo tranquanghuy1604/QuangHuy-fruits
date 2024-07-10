@@ -57,8 +57,10 @@ export default function HotProduct() {
           {listProduct?.map((item: any) => (
             <SwiperSlide key={item?._id} className='shadow-lg p-4 border-[1px] border-solid border-[#cccc] w-full'>
               <div className='overflow-hidden'>
-                <img
-                  className='object-cover w-[300px] h-[200px] hover:scale-[1.3] transition-all overflow-hidden'
+                <Image
+                  width={300}
+                  height={200}
+                  className='object-cover hover:scale-[1.3] transition-all overflow-hidden'
                   src={`http://localhost:5000/${item?.product_id?.images}`}
                   alt=''
                 />

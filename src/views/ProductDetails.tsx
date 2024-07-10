@@ -126,7 +126,7 @@ export default function ProductDetails() {
             <p>{itemProduct?.name} Úc được người tiêu dùng trên thế giới yêu thích.</p>
           </div>
           <div>
-            <img className='w-full max-w-[500px] mx-auto' src={`http://localhost:5000/${itemProduct?.images}`} alt='' />
+            <Image width={500} className='mx-auto' src={`http://localhost:5000/${itemProduct?.images}`} alt='' />
           </div>
           <h3 className='text-[28px] font-[700] mt-[40px]'>Đặc điểm</h3>
           <div className='mt-[10px] text-[18px] font-[500] leading-[28px]'>

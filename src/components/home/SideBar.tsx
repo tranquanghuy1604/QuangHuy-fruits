@@ -6,6 +6,7 @@ import 'swiper/css/pagination';
 
 import { Autoplay, Pagination } from 'swiper/modules';
 import { serviceShop } from '@/constant/app.constant';
+import Image from 'next/image';
 export default function SideBar() {
   return (
     <div>
@@ -24,13 +25,13 @@ export default function SideBar() {
         className='mySwiper'
       >
         <SwiperSlide>
-          <img className='h-[500px] w-full object-cover' src='/image/home/banner-1.jpg' alt='' />
+          <Image height={100} width={2000} className='object-cover' src='/image/home/banner-1.jpg' alt='' />
         </SwiperSlide>
         <SwiperSlide>
-          <img className='h-[500px] w-full object-cover' src='/image/home/banner-2.jpg' alt='' />
+          <Image height={100} width={2000} className='object-cover' src='/image/home/banner-2.jpg' alt='' />
         </SwiperSlide>
         <SwiperSlide>
-          <img className='h-[500px] w-full object-cover' src='/image/home/banner-3.jpg' alt='' />
+          <Image height={100} width={2000} className='object-cover' src='/image/home/banner-3.jpg' alt='' />
         </SwiperSlide>
       </Swiper>
       <div className='grid grid-cols-4 items-center gap-[40px] px-[20px] py-[40px]'>

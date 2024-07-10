@@ -64,7 +64,7 @@ export default function ShoppingCartView() {
                   <td className='text-left py-[10px]'>
                     <div className='flex items-center gap-[10px]'>
                       <FaRegCircleXmark className='text-[20px] cursor-pointer' onClick={() => handleRemove(index)} />
-                      <img className='w-[30px] h-[30px]' src={`http://localhost:5000/${item.images}`} alt={item.name} />
+                      <Image height={30} width={30} src={`http://localhost:5000/${item.images}`} alt={item.name} />
                       <p className='text-[15px] font-[400]'>{item.name}</p>
                     </div>
                   </td>
