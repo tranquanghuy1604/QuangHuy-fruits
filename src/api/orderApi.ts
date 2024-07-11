@@ -26,6 +26,14 @@ const orderApi = {
     const url = '/payment/order-status';
     return await apiClient.post(url, params);
   },
+  async getListOrderWaitingConfirm(params: any) {
+    const url = '/order/get-order-confirm';
+    return await apiClient.post(url, params);
+  },
+  async deleteOrderFromUser(params: any) {
+    const url = '/order/delete-order-user';
+    return await apiClient.post(url, params);
+  },
 };
 
 export const useMutationCreateOrder = () => {
@@ -50,6 +58,16 @@ export const useMutationPaymentOrder = () => {
 
 export const useMutationCheckPaymentOrder = () => {
   return useMutation((params: any) => orderApi.checkPayment(params));
+};
+
+export const useQueryGetOrderConfirm = (userId: any) => {
+  return useQuery(['list-order-waiting', userId], () => orderApi.getListOrderWaitingConfirm(userId), {
+    enabled: !!userId,
+  });
+};
+
+export const useMutationDeleteOrderFromUser = () => {
+  return useMutation((params: any) => orderApi.deleteOrderFromUser(params));
 };
 
 export default orderApi;

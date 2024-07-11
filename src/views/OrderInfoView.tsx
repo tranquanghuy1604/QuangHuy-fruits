@@ -6,15 +6,20 @@ import { useQueryGetUser } from '@/api/authApi';
 import { useQueryGetUserOrder } from '@/api/orderApi';
 import FormRate from '@/components/order-info/FormRate';
 import TabFinishOrder from '@/components/order-info/TabFinishOrder';
+import TabConfirmOrder from '@/components/order-info/TabConfirmOrder';
 
 export default function OrderInfoView() {
-  const [isOpenTab, setIsOpenTab] = useState(false);
+  const [isOpenTab, setIsOpenTab] = useState<string | null>(null);
   const [isOpenModal, setIsoOpenModal] = useState(false);
   const { data } = useQueryGetUser();
   const user = data as any;
   const { data: order } = useQueryGetUserOrder({ userId: user?._id });
   const listOrder = order as any;
   let count;
+
+  const handleOpenTab = (value: string) => {
+    setIsOpenTab(value);
+  };
 
   const filterStatusUser = (status: any) => {
     return listOrder?.reduce((acc: number, itemOrder: any) => {
@@ -37,18 +42,18 @@ export default function OrderInfoView() {
   return (
     <>
       <div className='flex justify-around mt-[100px] text-black w-full max-w-[800px] mx-auto'>
-        <div className='text-center'>
+        <button onClick={() => handleOpenTab('waiting-confirm')} className='text-center'>
           <Badge count={filterStatusUser('waiting-confirm')} offset={[0, 5]}>
             <WalletOutlined className='text-2xl' />
           </Badge>
           <div>Chờ xác nhận</div>
-        </div>
-        <div className='text-center'>
+        </button>
+        <button onClick={() => handleOpenTab('waiting-delivery')} className='text-center'>
           <Badge count={filterStatusUser('waiting-delivery')} offset={[0, 5]}>
             <GiftOutlined className='text-2xl' />
           </Badge>
           <div>Chờ lấy hàng</div>
-        </div>
+        </button>
         <div className='text-center relative'>
           <Badge count={filterStatusUser('pending')} offset={[0, 10]}>
             <CarOutlined className='text-2xl' />
@@ -62,14 +67,15 @@ export default function OrderInfoView() {
           </Badge>
           <div>Đánh giá</div>
         </button>
-        <button onClick={() => setIsOpenTab(!isOpenTab)} className='text-center relative'>
+        <button onClick={() => handleOpenTab('finish')} className='text-center relative'>
           <Badge count={filterStatusUser('pending')} offset={[0, 10]}>
             <FileDoneOutlined className='text-2xl' />
           </Badge>
           <div>Hoàn thành</div>
         </button>
       </div>
-      {isOpenTab && <TabFinishOrder userId={user?._id} />}
+      {isOpenTab === 'waiting-confirm' && <TabConfirmOrder userId={user?._id} />}
+      {isOpenTab === 'finish' && <TabFinishOrder userId={user?._id} />}
       <FormRate item={listOrder} open={isOpenModal} onClose={() => setIsoOpenModal(false)} />
     </>
   );
