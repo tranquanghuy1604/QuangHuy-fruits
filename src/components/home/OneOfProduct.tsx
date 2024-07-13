@@ -50,10 +50,8 @@ export default function OnOfProduct() {
               return (
                 <SwiperSlide key={item?._id} className='shadow-lg p-4 border-[1px] border-solid border-[#cccc] w-full'>
                   <div className='overflow-hidden'>
-                    <Image
-                      width={300}
-                      height={200}
-                      className='object-cover hover:scale-[1.3] transition-all overflow-hidden'
+                    <img
+                      className='w-[300px] h-[200px] object-cover hover:scale-[1.3] transition-all overflow-hidden'
                       src={`http://localhost:5000/${item?.images}`}
                       alt=''
                     />
