@@ -57,7 +57,6 @@ export default function OnOfProduct() {
                     />
                   </div>
                   <p className='text-center text-[20px] font-[500] leading-[30px] mt-[20px]'>{item?.name}</p>
-
                   <p className='mt-[10px] text-center'>{FormatPrice(item.price)}đ/kg</p>
                   <div className='text-center mt-[10px]'>
                     <Button className='' type='primary' onClick={() => addToCart(item)}>
