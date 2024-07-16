@@ -63,7 +63,7 @@ export default function RegionalFruitsView() {
         </p>
       </div>
       <div>
-        <div className='grid grid-cols-4 gap-[40px] mt-[40px]'>
+        <div className='grid xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[40px] mt-[40px]'>
           {dataProductCategory &&
             currentData.map((item: any) => {
               const promotionPrice = getPromotionalPrice(item);
@@ -73,7 +73,7 @@ export default function RegionalFruitsView() {
                     <div className='overflow-hidden'>
                       <img
                         src={`http://localhost:5000/${item.images}`}
-                        className='w-full h-[100px] md:h-[200px] cursor-pointer hover:scale-[1.3] transition-all object-cover overflow-hidden'
+                        className='w-full h-[300px] xs:h-[200px] lg:h-[300px] cursor-pointer hover:scale-[1.3] transition-all object-cover overflow-hidden'
                         alt=''
                       />
                     </div>

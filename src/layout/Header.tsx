@@ -7,6 +7,7 @@ import { FaSearch, FaShoppingCart } from 'react-icons/fa';
 import { DownOutlined, SmileOutlined } from '@ant-design/icons';
 import {
   FaArrowDown,
+  FaBars,
   FaBasketShopping,
   FaCircleUser,
   FaFacebook,
@@ -22,6 +23,7 @@ import ChangePassWordModal from './ChangePassWordModal';
 import { useMutationFindProduct } from '@/api/productApi';
 import { useQueryGetUser } from '@/api/authApi';
 import FormEditInfoUser from './FormChangeInfoUser';
+import HeaderMobile from './HeaderMobile';
 
 const productMenuItems: MenuProps['items'] = [
   {
@@ -84,6 +86,7 @@ const userNewsMenu: MenuProps['items'] = [
 ];
 
 export default function Header() {
+  const [openNavBar, setOpenNavBar] = useState(false);
   const [cart, setCart] = useRecoilState(cartState);
   const [cartItemCount, setCartItemCount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -168,10 +171,13 @@ export default function Header() {
 
   return (
     <>
-      <div className='fixed top-0 left-0 z-[1000] w-full'>
+      <div className='fixed top-0 left-0 z-[500] w-full'>
         <div className='w-full bg-[#00C42E] text-white '>
-          <div className='flex w-full max-w-[1440px] mx-auto justify-between items-center h-[50px] py-[5px] px-16'>
-            <div className='flex items-center gap-[20px]'>
+          <div className='flex w-full max-w-[1440px] md:mx-auto justify-between items-center h-[50px] py-[5px] px-[10px] md:px-16'>
+            <Link className='md:hidden' href='/'>
+              <Image src='/image/home/logo.png' width={30} height={20} alt='' />
+            </Link>
+            <div className='hidden md:flex items-center gap-[20px]'>
               <Link href='#'>
                 <FaFacebook />
               </Link>
@@ -188,7 +194,7 @@ export default function Header() {
                 <FaYoutube />
               </Link>
             </div>
-            <div className='justify-between w-full flex gap-[10px] items-center flex-1 max-w-[500px] text-black h-full bg-white mx-auto items-centers rounded-[8px] px-[8px]'>
+            <div className='justify-between w-full hidden md:flex gap-[10px] items-center flex-1 max-w-[500px] text-black h-full bg-white mx-auto items-centers rounded-[8px] px-[8px]'>
               <Dropdown className='w-full' menu={{ items: userFindProducts }} trigger={['click']}>
                 <Input
                   onChange={handleInputChange}
@@ -232,21 +238,28 @@ export default function Header() {
           </div>
         </div>
         <div className='border-b-[1px] border-[#000] bg-white'>
-          <div className='w-full max-w-[1440px] mx-auto flex justify-between items-center text-[#000] h-[60px] px-16'>
-            <Link href='/'>
-              <Image src='/image/home/logo.jpg' width={50} height={20} alt='' />
+          <div className='w-full max-w-[1440px] mx-auto flex justify-between items-center text-[#000] h-[60px] px-[10px] md:px-16'>
+            <button className='md:hidden' onClick={() => setOpenNavBar(true)}>
+              <FaBars className='text-[32px]' />
+            </button>
+            <Link className='hidden md:block' href='/'>
+              <Image src='/image/home/logo.png' width={50} height={20} alt='' />
             </Link>
-            <div>
+            <div className='hidden md:block'>
               <ul className='flex items-center gap-[20px] font-[700]'>
                 <li className='cursor-pointer transition-all'>
-                  <Dropdown menu={{ items: productMenuItems }} overlayClassName='custom-dropdown-menu'>
+                  <Dropdown
+                    menu={{ items: productMenuItems }}
+                    trigger={['hover']}
+                    overlayClassName='custom-dropdown-menu'
+                  >
                     <button className='flex items-center gap-[5px]'>
                       Sản phẩm <DownOutlined className='text-[13px]' />
                     </button>
                   </Dropdown>
                 </li>
                 <li className='cursor-pointer'>
-                  <Dropdown menu={{ items: userNewsMenu }} overlayClassName='custom-dropdown-menu'>
+                  <Dropdown trigger={['hover']} menu={{ items: userNewsMenu }} overlayClassName='custom-dropdown-menu'>
                     <button className='flex items-center gap-[5px] '>
                       Tin tức <DownOutlined className='text-[13px]' />
                     </button>
@@ -281,6 +294,7 @@ export default function Header() {
       </div>
       <ChangePassWordModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <FormEditInfoUser open={isModalOpenInfo} item={user} onClose={() => setIsModalOpenInfo(false)} />
+      <HeaderMobile open={openNavBar} onClose={() => setOpenNavBar(false)} />
     </>
   );
 }

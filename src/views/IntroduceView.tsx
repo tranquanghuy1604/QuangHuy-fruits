@@ -9,8 +9,8 @@ export default function IntroduceView() {
       </div>
       <div className='mt-[50px]'>
         <h2 className='text-[28px] font-[700] uppercase'>Giới thiệu về Quang Huy fruits</h2>
-        <div className='flex mt-[30px] justify-between items-center'>
-          <div className='w-[49%]'>
+        <div className='md:flex mt-[30px] justify-between items-center'>
+          <div className='w-full md:w-[49%]'>
             <p className='text-[18px] leading-[32px]'>
               Quang Huy Fruits là chuỗi cửa hàng trái cây sạch hàng đầu Việt Nam. Với sứ mệnh mang đến cho người tiêu
               dùng Việt Nam những sản phẩm trái cây mang thương hiệu Việt và trái cây ngoại nhập với chất lượng tốt
@@ -22,7 +22,7 @@ export default function IntroduceView() {
               theo quy định.
             </p>
           </div>
-          <div className='w-[49%]'>
+          <div className='w-full mt-[30px] md:mt-0 md:w-[49%]'>
             <Image width={1000} height={400} src='/image/home/introduct-img.jpg' alt='' />
           </div>
         </div>

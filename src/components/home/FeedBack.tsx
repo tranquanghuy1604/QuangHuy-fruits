@@ -16,7 +16,25 @@ export default function FeedBack() {
       </div>
       <div className=''>
         <div className='pt-[50px]'>
-          <Swiper slidesPerView={3} spaceBetween={30} className='mySwiper cursor-pointer'>
+          <Swiper
+            slidesPerView={3}
+            spaceBetween={30}
+            breakpoints={{
+              320: {
+                slidesPerView: 1,
+                spaceBetween: 30,
+              },
+              480: {
+                slidesPerView: 2,
+                spaceBetween: 30,
+              },
+              900: {
+                slidesPerView: 3,
+                spaceBetween: 40,
+              },
+            }}
+            className='mySwiper cursor-pointer'
+          >
             <SwiperSlide className='mx-auto'>
               <div className='max-w-[350px] px-[40px] border-[1px] border-[#00C42E] border-dashed mx-auto py-4 bg-white rounded-[10px]'>
                 <Image

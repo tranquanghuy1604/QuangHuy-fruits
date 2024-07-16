@@ -2,10 +2,10 @@ import { EnvironmentOutlined, FacebookOutlined, MailOutlined, PhoneOutlined } fr
 import Image from 'next/image';
 export default function Footer() {
   return (
-    <div className='bg-gray-800 text-white py-10 mt-[40px] md:mt-[80px]'>
+    <div className='bg-gray-800 text-white py-10 mt-[40px] md:mt-[80px] px-[10px]'>
       <div className='container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 2xl:px-[20px]'>
         <div className='flex flex-col items-center md:items-start'>
-          <Image width={100} height={100} src='/image/home/logo.jpg' alt='Quang Huy Fruits' className='mb-4' />
+          <Image width={100} height={100} src='/image/home/logo.png' alt='Quang Huy Fruits' className='mb-4' />
           <h2 className='text-lg font-bold mb-2'>Về chúng tôi</h2>
           <p className='text-sm'>
             Chuyên cung cấp các loại hoa quả nhập khẩu, nội địa và các loại thực phẩm từ thiên nhiên.

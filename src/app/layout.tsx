@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <link rel='shortcut icon' href='/image/home/logo.jpg' />
+      <link rel='shortcut icon' href='/image/home/logo.png' />
       <body className={inter.className}>
         <ConfigProvider>{children}</ConfigProvider>
       </body>

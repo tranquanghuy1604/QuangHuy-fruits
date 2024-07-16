@@ -50,6 +50,20 @@ export default function HotProduct() {
         <Swiper
           slidesPerView={4}
           spaceBetween={30}
+          breakpoints={{
+            320: {
+              slidesPerView: 1,
+              spaceBetween: 20,
+            },
+            500: {
+              slidesPerView: 2,
+              spaceBetween: 20,
+            },
+            900: {
+              slidesPerView: 4,
+              spaceBetween: 30,
+            },
+          }}
           navigation={true}
           modules={[Navigation]}
           className='mySwiper cursor-pointer bg-white'

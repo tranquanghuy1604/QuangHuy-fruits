@@ -34,9 +34,9 @@ export default function SideBar() {
           <Image height={100} width={2000} className='object-cover' src='/image/home/banner-3.jpg' alt='' />
         </SwiperSlide>
       </Swiper>
-      <div className='grid grid-cols-4 items-center gap-[40px] px-[20px] py-[40px]'>
+      <div className='grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 items-center gap-[40px] px-[20px] py-[40px]'>
         {serviceShop.map((item, index) => (
-          <div key={index} className='item-span-1 flex items-start gap-[20px]'>
+          <div key={index} className='item-span-1 flex items-center md:items-start gap-[20px]'>
             <img src={item.image} alt='' />
             <div>
               <p className='text-[#191919]'>{item.title}</p>
