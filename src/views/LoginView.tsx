@@ -33,7 +33,7 @@ export default function LoginForm() {
           router.push('/');
         },
         onError: () => {
-          toast.error('Đăng nhập thất bại');
+          toast.error('Tên tài khoản hoặc mật khẩu không chính xác');
         },
       },
     );
