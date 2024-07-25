@@ -71,7 +71,6 @@ export default function LoginForm() {
           </Form.Item>
           <Form.Item>
             <Form.Item name='remember' valuePropName='checked' noStyle>
-              <Checkbox>Remember me</Checkbox>
               <Link href='forgot-password'>Quên mật khẩu</Link>
             </Form.Item>
           </Form.Item>

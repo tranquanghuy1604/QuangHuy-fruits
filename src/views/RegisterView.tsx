@@ -110,11 +110,6 @@ export default function RegisterForm() {
           >
             <Input.Password className='mt-[10px] h-[50px]' type='password' placeholder='Confirm Password' />
           </Form.Item>
-          <Form.Item>
-            <Form.Item name='remember' valuePropName='checked' noStyle>
-              <Checkbox>Remember me</Checkbox>
-            </Form.Item>
-          </Form.Item>
 
           <Form.Item>
             <Button type='primary' htmlType='submit' className='login-form-button'>
