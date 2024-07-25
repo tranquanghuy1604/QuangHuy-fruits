@@ -28,7 +28,7 @@ export default function ImportedFruitView() {
 
   const addToCart = (item: any) => {
     const promotion = getPromotionalPrice(item);
-    const price = promotion ? item.price - item.price * (promotion.discount / 100) : item.price;
+    const price = promotion ? item?.price - item.price * (promotion.discount / 100) : item.price;
 
     const existingItem = cart.find((cartItem: any) => cartItem._id === item._id);
     if (existingItem) {
@@ -44,13 +44,14 @@ export default function ImportedFruitView() {
   };
 
   const getPromotionalPrice = (item: any) => {
-    const promotion = listPromotion?.find((promotion: any) => promotion?.product_id === item?._id);
+    const promotion = listPromotion?.find((promotion: any) => promotion?.product_id?._id === item?._id);
     return promotion;
   };
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const currentData = dataProductCategory && dataProductCategory?.slice(startIndex, endIndex);
+  console.log(currentData);
   return (
     <div className='text-[#000]'>
       <div className='mt-[50px]'>
@@ -62,7 +63,9 @@ export default function ImportedFruitView() {
         <div className='grid xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[40px] mt-[40px]'>
           {dataProductCategory &&
             currentData.map((item: any) => {
+              console.log(item);
               const promoPrice = getPromotionalPrice(item);
+
               return (
                 <div key={item._id} className='w-full bg-white border-[1px] p-6 rounded-md shadow-lg'>
                   <Link href={`/product/${FormatUrl(item._id)}`}>

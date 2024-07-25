@@ -51,7 +51,7 @@ export default function RegionalFruitsView() {
   };
 
   const getPromotionalPrice = (item: any) => {
-    const promotion = listPromotion?.find((promotion: any) => promotion?.product_id === item?._id);
+    const promotion = listPromotion?.find((promotion: any) => promotion?.product_id?._id === item?._id);
     return promotion;
   };
 
@@ -59,7 +59,7 @@ export default function RegionalFruitsView() {
     <div className='text-[#000]'>
       <div className='mt-[50px]'>
         <p className='uppercase text-[28px] font-[700]'>
-          <span className='text-[#cccc]'>trang chủ /</span> Hoa quả vùng miền
+          <span className='text-[#cccc]'>trang chủ /</span> Hoa quả xuất khẩu
         </p>
       </div>
       <div>
