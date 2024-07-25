@@ -7,6 +7,7 @@ import Footer from '@/layout/Footer';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { RecoilRoot } from 'recoil';
 import { Toaster } from 'react-hot-toast';
+import { ConfigProvider } from 'antd';
 const inter = Inter({ subsets: ['latin'] });
 
 const queryClient = new QueryClient({
@@ -17,7 +18,7 @@ const queryClient = new QueryClient({
   },
 });
 
-export default function ConfigProvider({
+export default function AuthProvider({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -25,10 +26,21 @@ export default function ConfigProvider({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <RecoilRoot>
-          <Toaster position='top-right' />
-          <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-        </RecoilRoot>
+        <ConfigProvider
+          theme={{
+            components: {
+              Button: {
+                colorPrimary: '#00C42E',
+                algorithm: true, // Enable algorithm
+              },
+            },
+          }}
+        >
+          <RecoilRoot>
+            <Toaster position='top-right' />
+            <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+          </RecoilRoot>
+        </ConfigProvider>
       </body>
     </html>
   );

@@ -85,7 +85,7 @@ export default function HotProduct() {
                 </span>
               </p>
               <div className='text-center mt-[10px]'>
-                <Button className='' type='primary' onClick={() => addToCart(item)}>
+                <Button className='text-[]' type='primary' onClick={() => addToCart(item)}>
                   Thêm vào giỏ hàng
                 </Button>
               </div>

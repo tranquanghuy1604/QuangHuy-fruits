@@ -1,4 +1,4 @@
-import ConfigProvider from '@/components/Auth/ConfigProvider';
+import AuthProvider from '@/components/Auth/AuthProvider';
 import '@/styles/globals.css';
 import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang='en'>
       <link rel='shortcut icon' href='/image/home/logo.png' />
       <body className={inter.className}>
-        <ConfigProvider>{children}</ConfigProvider>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );
